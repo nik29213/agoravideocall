@@ -37,11 +37,11 @@ public rtc :Rtc;
 
 public options = {
   // Pass your App ID here.
-  appId: "628aee40afb34b789f77cdf9c8e88127",
+  appId: "your app id",
   // Set the channel name.
   channel: "testchannel",
   // Pass your temp token here.
-  token: "006628aee40afb34b789f77cdf9c8e88127IACFF7yLwFLx0p4kxHSQ5aviWKwtT601mlqgRftCfL9IQ+puE8wAAAAAEAATtvR98LEYYgEAAQDxsRhi",
+  token: "your token",
   // Set the user ID.
   uid: 123456
 };
