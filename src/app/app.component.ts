@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AngularAgoraRtcService, Stream, AgoraClient } from 'angular-agora-rtc';
 import AgoraRTC from "agora-rtc-sdk-ng";
 import { Rtc } from './rtc';
-import { join } from 'path';
 
 //https://docs.agora.io/en/Video/start_call_web_ng?platform=Web
 //https://medium.com/swlh/angular-video-conferencing-with-agora-io-45905235eebb
@@ -37,11 +36,11 @@ public rtc :Rtc;
 
 public options = {
   // Pass your App ID here.
-  appId: "your app id",
+  appId: "app id here",
   // Set the channel name.
   channel: "testchannel",
   // Pass your temp token here.
-  token: "your token",
+  token: "token here",
   // Set the user ID.
   uid: 123456
 };
@@ -52,6 +51,7 @@ async join() {
   await this.rtc.client.join(this.options.appId, this.options.channel, this.options.token, this.options.uid);
         // Create a local audio track from the audio sampled by a microphone.
         this.rtc.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+        console.log("got local audio");
         // Create a local video track from the video captured by a camera.
         this.rtc.localVideoTrack = await AgoraRTC.createCameraVideoTrack();
         // Publish the local audio and video tracks to the RTC channel.
@@ -97,7 +97,8 @@ async remoteusers() {
 
         // Play the remote video track.
         // Pass the DIV container and the SDK dynamically creates a player in the container for playing the remote video track.
-        remoteVideoTrack.play(remotePlayerContainer);
+        if(remoteVideoTrack!=undefined)
+          remoteVideoTrack.play(remotePlayerContainer);
 
         // Or just pass the ID of the DIV container.
         // remoteVideoTrack.play(playerContainer.id);
@@ -108,7 +109,8 @@ async remoteusers() {
         // Get the RemoteAudioTrack object in the AgoraRTCRemoteUser object.
         const remoteAudioTrack = user.audioTrack;
         // Play the remote audio track. No need to pass any DOM element.
-        remoteAudioTrack.play();
+        if(remoteAudioTrack!=undefined)
+          remoteAudioTrack.play();
     }
 
     // Listen for the "user-unpublished" event
@@ -116,7 +118,8 @@ async remoteusers() {
         // Get the dynamically created DIV container.
         const remotePlayerContainer = document.getElementById(user.uid.toString());
         // Destroy the container.
-        remotePlayerContainer.remove();
+        if(remotePlayerContainer!=null)
+          remotePlayerContainer.remove();
     });
 
   });
@@ -144,8 +147,7 @@ async startBasicCall() {
   
 }
 
-ngOnInit() {
-    
+ngOnInit() {    
   this.startBasicCall()
 
 }
